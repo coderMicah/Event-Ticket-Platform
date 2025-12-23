@@ -18,7 +18,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,53 +29,45 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
-    
+
     @Id
-    @Column(name = "id",updatable = false,nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
     @EqualsAndHashCode.Include
     private String name;
 
-    @Column(name="email",nullable = false)
+    @Column(name = "email", nullable = false)
     @EqualsAndHashCode.Include
     private String email;
 
-   
-    @OneToMany(mappedBy = "organizer",cascade = CascadeType.ALL)
-    @Column(name="organized_events")
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL)
+    @Column(name = "organized_events")
     private List<Event> organizedEvents = new ArrayList<>();
 
-    @OneToMany(mappedBy = "purchaser",cascade = CascadeType.ALL)
-    @Column(name="tickets")
+    @OneToMany(mappedBy = "purchaser", cascade = CascadeType.ALL)
+    @Column(name = "tickets")
     private List<Ticket> tickets = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(
-        name = "user_attending_events",
-        joinColumns = @JoinColumn(name="user_id"),
-        inverseJoinColumns = @JoinColumn(name="event_id"))
+    @JoinTable(name = "user_attending_events", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> attendingEvents = new ArrayList<>();
 
     @ManyToMany
-     @JoinTable(
-        name = "user_staffing_events",
-        joinColumns = @JoinColumn(name="user_id"),
-        inverseJoinColumns = @JoinColumn(name="event_id"))
+    @JoinTable(name = "user_staffing_events", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> staffingEvents = new ArrayList<>();
 
     @CreatedDate
-    @Column(name = "created_at",nullable = false,updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     @EqualsAndHashCode.Include
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name="updated_at",nullable = false,updatable = true)
+    @Column(name = "updated_at", nullable = false, updatable = true)
     @EqualsAndHashCode.Include
     private LocalDateTime updatedAt;
 }
