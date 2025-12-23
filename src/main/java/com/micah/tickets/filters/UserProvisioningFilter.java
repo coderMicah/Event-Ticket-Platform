@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.micah.tickets.domain.User;
+import com.micah.tickets.domain.entities.User;
 import com.micah.tickets.repositories.UserRepository;
 
 import jakarta.servlet.FilterChain;

@@ -1,4 +1,4 @@
-package com.micah.tickets.domain;
+package com.micah.tickets.domain.entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

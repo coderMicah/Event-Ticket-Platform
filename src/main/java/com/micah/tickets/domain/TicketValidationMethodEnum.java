@@ -1,5 +1,0 @@
-package com.micah.tickets.domain;
-
-public enum TicketValidationMethodEnum {
-    QR_SCAN,MANUAL
-}

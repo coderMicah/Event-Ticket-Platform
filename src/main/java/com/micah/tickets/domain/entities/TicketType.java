@@ -1,21 +1,23 @@
-package com.micah.tickets.domain;
+package com.micah.tickets.domain.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,40 +27,52 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "qr_codes")
+@Table(name = "ticket_types")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class QrCode {
+public class TicketType {
+
     @Id
+    @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id",nullable = false,updatable = false)
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @Column(name = "status",nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Column(name = "name", nullable = false)
     @EqualsAndHashCode.Include
-    private QrCodeStatusEnum status;
+    private String name;
 
-    @Column(name = "value",nullable = false)
+    @Column(name = "total_available")
     @EqualsAndHashCode.Include
-    private String value;
+    private Integer totalAvailable;
+
+    @Column(name = "price", nullable = false)
+    @EqualsAndHashCode.Include
+    private Double price;
+
+    @Column(name = "description")
+    @EqualsAndHashCode.Include
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
+    @JoinColumn(name = "event_id")
+    private Event event;
+
+    @OneToMany(mappedBy = "ticketType", cascade = CascadeType.ALL)
+    private List<Ticket> tickets = new ArrayList<>();
 
     @CreatedDate
-    @Column(name="created_at",nullable = false,updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     @EqualsAndHashCode.Include
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "updated_at",nullable = false,updatable = false)
+    @Column(name = "updated_at", nullable = false, updatable = false)
     @EqualsAndHashCode.Include
     private LocalDateTime updatedAt;
+
 }

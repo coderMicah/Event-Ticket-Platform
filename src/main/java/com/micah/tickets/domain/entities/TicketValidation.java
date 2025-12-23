@@ -1,4 +1,4 @@
-package com.micah.tickets.domain;
+package com.micah.tickets.domain.entities;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -33,33 +33,33 @@ import lombok.Setter;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TicketValidation {
-    
-    @Id
-    @GeneratedValue(strategy=GenerationType.UUID)
-    @Column(name = "id",nullable = false,updatable = false)
-    @EqualsAndHashCode.Include
-    private UUID id;
 
-    @Column(name = "status",nullable = false)
-    @Enumerated(EnumType.STRING)
-    @EqualsAndHashCode.Include
-    private TicketValidationStatusEnum status;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  @Column(name = "id", nullable = false, updatable = false)
+  @EqualsAndHashCode.Include
+  private UUID id;
 
-    @Column(name="validation_method",nullable = false)
-    @Enumerated(EnumType.STRING)   
-    private TicketValidationMethodEnum validationMethod;
+  @Column(name = "status", nullable = false)
+  @Enumerated(EnumType.STRING)
+  @EqualsAndHashCode.Include
+  private TicketValidationStatusEnum status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
+  @Column(name = "validation_method", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private TicketValidationMethodEnum validationMethod;
 
-    @CreatedDate
-    @Column(name = "created_at",nullable = false,updatable = false)
-      @EqualsAndHashCode.Include
-    private LocalDateTime createdAt;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "ticket_id")
+  private Ticket ticket;
 
-    @LastModifiedDate
-    @Column(name = "updated_at",nullable = false,updatable = false)
-      @EqualsAndHashCode.Include
-    private LocalDateTime updatedAt;
+  @CreatedDate
+  @Column(name = "created_at", nullable = false, updatable = false)
+  @EqualsAndHashCode.Include
+  private LocalDateTime createdAt;
+
+  @LastModifiedDate
+  @Column(name = "updated_at", nullable = false, updatable = false)
+  @EqualsAndHashCode.Include
+  private LocalDateTime updatedAt;
 }
