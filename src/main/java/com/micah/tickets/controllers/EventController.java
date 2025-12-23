@@ -22,7 +22,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(params = "/api/v1/events")
+@RequestMapping("/api/v1/events")
 @RequiredArgsConstructor
 public class EventController {
 

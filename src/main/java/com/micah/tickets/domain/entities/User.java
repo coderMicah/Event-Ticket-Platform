@@ -7,10 +7,13 @@ import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -25,6 +28,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "users")
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -45,19 +49,19 @@ public class User {
     @EqualsAndHashCode.Include
     private String email;
 
-    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL)
-    @Column(name = "organized_events")
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    // @Column(name = "organized_events")
     private List<Event> organizedEvents = new ArrayList<>();
 
-    @OneToMany(mappedBy = "purchaser", cascade = CascadeType.ALL)
-    @Column(name = "tickets")
+    @OneToMany(mappedBy = "purchaser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    // @Column(name = "tickets")
     private List<Ticket> tickets = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_attending_events", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> attendingEvents = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_staffing_events", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> staffingEvents = new ArrayList<>();
 

@@ -44,7 +44,7 @@ public class QrCode {
     @EqualsAndHashCode.Include
     private QrCodeStatusEnum status;
 
-    @Column(name = "value", nullable = false)
+    @Column(name = "qr_value`", nullable = false)
     @EqualsAndHashCode.Include
     private String value;
 
