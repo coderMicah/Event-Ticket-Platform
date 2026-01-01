@@ -17,6 +17,7 @@ import com.micah.tickets.domain.CreateEventRequest;
 import com.micah.tickets.domain.UpdateEventRequest;
 import com.micah.tickets.domain.UpdateTicketTypeRequest;
 import com.micah.tickets.domain.entities.Event;
+import com.micah.tickets.domain.entities.EventStatusEnum;
 import com.micah.tickets.domain.entities.TicketType;
 import com.micah.tickets.domain.entities.User;
 import com.micah.tickets.exceptions.EventNotFoundException;
@@ -140,6 +141,11 @@ public class EventServiceImpl implements EventService {
     public void deleteEventForOrganizer(UUID organizerId, UUID eventId) {
         getEventForOrganizer(organizerId, eventId).ifPresent(eventRepository::delete);
 
+    }
+
+    @Override
+    public Page<Event> listPublishedEvents(Pageable pageable) {
+        return eventRepository.findByStatus(EventStatusEnum.PUBLISHED, pageable);
     }
 
 }
