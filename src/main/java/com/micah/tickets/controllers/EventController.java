@@ -11,15 +11,19 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.micah.tickets.domain.CreateEventRequest;
+import com.micah.tickets.domain.UpdateEventRequest;
 import com.micah.tickets.domain.dtos.CreateEventRequestDto;
 import com.micah.tickets.domain.dtos.CreateEventResponseDto;
 import com.micah.tickets.domain.dtos.GetEventDetailsResponseDto;
 import com.micah.tickets.domain.dtos.ListEventResponseDto;
+import com.micah.tickets.domain.dtos.UpdateEventRequestDto;
+import com.micah.tickets.domain.dtos.UpdateEventResponseDto;
 import com.micah.tickets.domain.entities.Event;
 import com.micah.tickets.mappers.EventMapper;
 import com.micah.tickets.services.EventService;
@@ -46,6 +50,19 @@ public class EventController {
         CreateEventResponseDto createdEventResponseDto = eventMapper.toDto(createdEvent);
         return new ResponseEntity<>(createdEventResponseDto, HttpStatus.CREATED);
 
+    }
+
+    @PutMapping(path = "/{eventId}")
+    public ResponseEntity<UpdateEventResponseDto> updateEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody UpdateEventRequestDto requestDto,
+            @PathVariable UUID eventId) {
+
+        UUID userId = parseUserId(jwt);
+        UpdateEventRequest request = eventMapper.fromDto(requestDto);
+        Event updatedEvent = eventService.updateEventForOrganizer(userId, eventId, request);
+        UpdateEventResponseDto updatedEventResponseDto = eventMapper.toUpdateEventResponseDto(updatedEvent);
+        return ResponseEntity.ok(updatedEventResponseDto);
     }
 
     @GetMapping

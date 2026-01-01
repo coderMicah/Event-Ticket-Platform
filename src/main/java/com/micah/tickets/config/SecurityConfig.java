@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.micah.tickets.filters.UserProvisioningFilter;
 
 @Configuration
-public class SecuritConfig {
+public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(
