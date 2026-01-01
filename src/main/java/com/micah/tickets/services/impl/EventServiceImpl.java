@@ -148,4 +148,10 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findByStatus(EventStatusEnum.PUBLISHED, pageable);
     }
 
+    @Override
+    public Page<Event> searchPublishedEvents(String query, Pageable pageable) {
+        return eventRepository.searchPublishedEvents(query, pageable);
+
+    }
+
 }
