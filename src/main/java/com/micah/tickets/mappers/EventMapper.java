@@ -8,6 +8,8 @@ import com.micah.tickets.domain.CreateTicketTypeRequest;
 import com.micah.tickets.domain.dtos.CreateEventRequestDto;
 import com.micah.tickets.domain.dtos.CreateEventResponseDto;
 import com.micah.tickets.domain.dtos.CreateTicketTypeRequestDto;
+import com.micah.tickets.domain.dtos.GetEventDetailsResponseDto;
+import com.micah.tickets.domain.dtos.GetEventDetailsTicketTypeResponseDto;
 import com.micah.tickets.domain.dtos.ListEventResponseDto;
 import com.micah.tickets.domain.dtos.ListEventTicketTypeResponseDto;
 import com.micah.tickets.domain.entities.Event;
@@ -26,4 +28,7 @@ public interface EventMapper {
 
     ListEventResponseDto toListEventResponseDto(Event event);
 
+    GetEventDetailsTicketTypeResponseDto toGetEventDetailsTicketTypeResponseDto(TicketType ticketType);
+
+    GetEventDetailsResponseDto toGetEventDetailsResponseDto(Event event);
 }

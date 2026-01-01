@@ -1,6 +1,7 @@
 package com.micah.tickets.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -59,6 +60,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public Page<Event> listEventsForOrganizer(UUID organizerId, Pageable pageable) {
         return eventRepository.findByOrganizerId(organizerId, pageable);
+    }
+
+    @Override
+    public Optional<Event> getEventForOrganizer(UUID organizerId, UUID eventId) {
+        return eventRepository.findByIdAndOrganizerId(eventId, organizerId);
     }
 
 }
