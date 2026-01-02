@@ -28,6 +28,7 @@ import com.micah.tickets.domain.dtos.UpdateEventResponseDto;
 import com.micah.tickets.domain.entities.Event;
 import com.micah.tickets.mappers.EventMapper;
 import com.micah.tickets.services.EventService;
+import static com.micah.tickets.util.JwtUtil.parseUserId;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -96,7 +97,4 @@ public class EventController {
 
     }
 
-    private UUID parseUserId(Jwt jwt) {
-        return UUID.fromString(jwt.getSubject());
-    }
 }
