@@ -6,9 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.micah.tickets.domain.dtos.GetTicketResponseDto;
 import com.micah.tickets.domain.dtos.ListTicketResponseDto;
 import com.micah.tickets.mappers.TicketMapper;
 import com.micah.tickets.services.TicketService;
@@ -37,6 +39,19 @@ public class TicketController {
                 .map(ticketMapper::toListTicketResponseDto);
 
         return ResponseEntity.ok(tickets);
+    }
+
+    @GetMapping(path = "/{ticketId}")
+    public ResponseEntity<GetTicketResponseDto> getTicket(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID ticketId) {
+        UUID userId = parseUserId(jwt);
+
+        return ticketService.getTicketForUser(userId, ticketId)
+                .map(ticketMapper::toGetTicketResponseDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+
     }
 
 }
