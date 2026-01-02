@@ -11,8 +11,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -34,7 +32,6 @@ import lombok.Setter;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class QrCode {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, updatable = false)
     @EqualsAndHashCode.Include
     private UUID id;
@@ -44,7 +41,7 @@ public class QrCode {
     @EqualsAndHashCode.Include
     private QrCodeStatusEnum status;
 
-    @Column(name = "qr_value`", nullable = false)
+    @Column(name = "qr_value`", columnDefinition = "TEXT", nullable = false)
     @EqualsAndHashCode.Include
     private String value;
 

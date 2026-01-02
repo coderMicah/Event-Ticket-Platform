@@ -20,7 +20,7 @@ public class SecurityConfig {
             UserProvisioningFilter userProvisioningFilter) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/published-events").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/published-events/**").permitAll()
                 .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))

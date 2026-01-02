@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.micah.tickets.domain.dtos.ErrorDto;
 import com.micah.tickets.exceptions.EventNotFoundException;
 import com.micah.tickets.exceptions.EventUpdateException;
+import com.micah.tickets.exceptions.QrCodeGenerationException;
 import com.micah.tickets.exceptions.TicketTypeNotFoundException;
 import com.micah.tickets.exceptions.UserNotFoundException;
 
@@ -22,6 +23,15 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(QrCodeGenerationException.class)
+    public ResponseEntity<ErrorDto> handleQrCodeGenerationException(
+            QrCodeGenerationException ex) {
+        log.error("Caught QrCodeGenerationException", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Unable to generate Qr Code");
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ExceptionHandler(EventUpdateException.class)
     public ResponseEntity<ErrorDto> handleEventUpdateException(
